@@ -1,0 +1,24 @@
+#Ignore main .RData 
+.RData
+#Ignore all R transcript files
+*.Rt
+#Ignore all picture files
+*.jpg
+*.pdf
+*.png
+*.ps
+#*.html
+#Ignore emacs and vim temporary files
+*.swp
+*.swo
+.#*
+*#
+#Ignore Apple files
+.DS_Store
+#Ignore tex output files
+*.log
+*.eps
+*.aux
+*.toc
+#Ignore output
+output/*
