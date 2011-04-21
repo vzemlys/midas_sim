@@ -12,10 +12,10 @@ sim.Y <- function(n,m,infty=10,sde=1,tfun,xfun,...) {
     X <- x[length(x)-(1:(n*m)-1)]
     start <- length(x)-n*m
     midas <- foreach(i=1:n,.combine=c) %do% {
-        sum(x[1:start+i*m]*theta)
+        sum(x[start:1+i*m]*theta)
     }
-    Y <- midas+rnorm(n,sd=sde)
-    res <- list(X=X,Y=Y)
+    Y <- 1+midas+rnorm(n,sd=sde)
+    res <- list(X=X,Y=Y,theta=theta)
     class(res) <- "midas_sim"
     res
 }
@@ -25,8 +25,8 @@ reflow <- function(object,...) UseMethod("reflow")
 reflow.midas_sim <- function(object,k) {
     m <- length(object$X)%/%length(object$Y)
     Y <- object$Y[(k+1):n]
-    X <- foreach(i=(k+1):n,.combine=rbind) %do% {
-        object$X[1:(m*k)+i*m]
+    X <- foreach(i=1:(n-k),.combine=rbind) %do% {
+        object$X[(m*(k+1)):1+(i-1)*m]
     }
     data.frame(Y,X)
 }
