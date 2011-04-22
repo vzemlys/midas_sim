@@ -15,7 +15,6 @@ sim.Y <- function(n,m,infty=10,sde=1,tfun,xfun,...) {
         sum(x[start:1+i*m]*theta)
     }
     Y <- 1+midas+rnorm(n,sd=sde)
-    browser()
     res <- list(X=X,Y=Y,theta=theta,midas=midas,x=x)
     class(res) <- "midas_sim"
     res
