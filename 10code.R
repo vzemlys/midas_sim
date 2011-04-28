@@ -21,8 +21,8 @@ sim.Y.infty<- function(n,m,infty=10,sde=1,tfun,xfun,...) {
 }
 
 sim.Y.finite <- function(n,m,k,sde=1,tfun,xfun,...) {
-   x <- xfun(k*n,m,...)
-   theta <- tfun(1:m*(k+1)-1,...)
+   x <- xfun(n+k+1,m,...)
+   theta <- tfun(1:(m*(k+1))-1,...)
    X <- x[sort(length(x)-(1:(n*m)-1))]
    start <- length(x)-n*m
    midas <- foreach(i=1:n,.combine=c) %do% {
@@ -47,7 +47,7 @@ reflow.midas_sim <- function(object,k) {
 }
   
 theta.216 <- function(index,lambda,...) {
-    poly(1/index,length(lambda)-1,raw=TRUE) %*%lambda[-1]+lambda[1]
+    poly(1/(index+1),length(lambda)-1,raw=TRUE) %*%lambda[-1]+lambda[1]
 }
 
 theta.214 <- function(index,lambda,...) {
@@ -78,7 +78,7 @@ theta.sin <- function(grid,theta=0.7,...) {
     1000*theta^(h)*sin(pi*(2*h+3)/6)
 }
 
-prep.nls <- function(object,k) {
+prep.nls.infty <- function(object,k) {
     mod <- lm(Y~.-1,data=reflow(object,k=k))
     that <- coef(mod)
     lst <- list(that=that,grid=expand.grid(1:object$m,0:k))
@@ -87,6 +87,12 @@ prep.nls <- function(object,k) {
 # mod2 <- nls(that~theta.mid(grid,theta),data=lst,start(theta=0.4))
  #list(ols=mod,nls=mod2)
 
+prep.nls.finite <- function(object,k) {
+    mod <- lm(Y~.-1,data=reflow(object,k=k))
+    that <- coef(mod)
+    lst <- list(that=that,index=1:(object$m*(k+1))-1)
+    lst
+}
 
 gen.k <- function(object,kmax) {
     res <- foreach(k=0:kmax) %do% {
