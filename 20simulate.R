@@ -14,7 +14,11 @@ k <- which.min(sapply(modl,KZ.k))-1
 bb <- prep.nls.finite(sim3,5)
 
 
+
 summary(nls(that~theta.216(index,lambda),data=bb,start=list(lambda=c(1,1,1))))
+
+summary(nls(that~theta.214(index,lambda),data=bb,start=list(lambda=c(1,1))))
+
 
 ##do100
 
@@ -24,8 +28,12 @@ sim3.100 <- foreach(i=1:100,.combine=c) %do% {
 
 pnls3.100.1 <- lapply(sim3.100,prep.nls.finite,k=1)
 
-nls3.100.1 <- lapply(pnls3.100.1,function(l){
+nls3.100.216 <- lapply(pnls3.100.1,function(l){
     nls(that~theta.216(index,lambda),data=l,start=list(lambda=c(1,1,1)))
+})
+
+nls3.100.214 <- lapply(pnls3.100.1,function(l){
+    nls(that~theta.214(index,lambda),data=l,start=list(lambda=c(1,1)))
 })
 
 modl3.100 <- lapply(sim3.100,gen.k,kmax=17)
