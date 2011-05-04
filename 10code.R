@@ -51,9 +51,20 @@ theta.216 <- function(index,lambda,...) {
 }
 
 theta.214 <- function(index,lambda,...) {
-    pol <- poly(index,2,raw=TRUE) %*%lambda
+    pol <- poly(1/(index+1),2,raw=TRUE) %*%lambda
     epol <- exp(pol)
     epol/sum(epol)
+}
+
+theta.r214 <- function(index,lambda,beta,...) {
+    pol <- poly((index+1),2,raw=TRUE) %*%lambda
+    epol <- exp(pol)
+    beta*epol/sum(epol)
+}
+
+theta.u214 <- function(index,lambda,beta,...) {
+    pol <- poly(index+1,2,raw=TRUE) %*%lambda
+    beta*exp(pol)
 }
 
 theta.ar <- function(grid,theta=0.3,...) {    
