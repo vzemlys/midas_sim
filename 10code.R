@@ -120,9 +120,11 @@ prep.nls.finite <- function(object,k) {
 }
   
 gen.k <- function(object,kmax) {
-    res <- foreach(k=0:kmax) %do% {
+    res <- foreach(k=0:kmax,.combine=rbind) %do% {
         mod <- lm(Y~.-1,data=reflow(object,k))
+        c(k,AIC(mod),BIC(mod),KZ.k(mod))
     }
+    colnames(res) <- c("Lag","AIC","BIC","KZIC")
     res
 }
 

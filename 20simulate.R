@@ -60,7 +60,7 @@ sim4.100 <- foreach(i=1:100,.combine=c) %do% {
     list(sim.Y.finite(100,4,1000,tfun=theta.u214,xfun=sim.X,lambda=c(-0.01,-0.001),beta=1))
 }
 
-modl4.100 <- lapply(sim4.100,gen.k,kmax=17)
+IC4.100 <- lapply(sim4.100,gen.k,kmax=17)
 
 
 
@@ -108,16 +108,4 @@ sim4dif.5 <- foreach(i=1:100,.combine=c) %do% {
     list(cbind(theta.r214(bb$index,coef(sn4r)[1:2],coef(sn4r)[3]),  theta.u214(bb$index,coef(sn4u)[1:2],coef(sn4u)[3])))
 }
 
- src <-
-      'NumericVector X(x);
-       IntegerVector Dims(dims);
-       int n=Dims(0); int m=Dims(1); int k=Dims(2);
-       NumericMatrix xx(n-k,m);
-       for(int i=0;i<n-k;i++) {
-         for(int j=0;j<m;j++) {
-           xx(i,j)=X(m*(k+1)-j-1+i*m);
-         }
-       }
-       return xx;'
-
-    rcppreflow <- cxxfunction(signature(x="numeric",dims="integer"),                        src,plugin="Rcpp")
+ 
