@@ -36,7 +36,7 @@ sim.Y.finite <- function(n,m,k,sde=1,tfun,xfun,...) {
 
 reflow <- function(object,...) UseMethod("reflow")
 
-reflow.midas_sim <- function(object,k) {
+reflowold.midas_sim <- function(object,k) {
     m <- length(object$X)%/%length(object$Y)
     n <- length(object$Y)
     Y <- object$Y[(k+1):n]
@@ -45,7 +45,15 @@ reflow.midas_sim <- function(object,k) {
     }
     data.frame(Y,X)
 }
-  
+
+reflow.midas_sim <- function(object,k) {
+    m <- length(object$X)%/%length(object$Y)
+    n <- length(object$Y)
+    Y <- object$Y[(k+1):n]
+    X <- rcppreflow(object$X,c(n,m,k))
+    data.frame(Y,X)
+}
+
 theta.216 <- function(index,lambda,...) {
     poly(1/(index+1),length(lambda)-1,raw=TRUE) %*%lambda[-1]+lambda[1]
 }
@@ -98,13 +106,19 @@ prep.nls.infty <- function(object,k) {
 # mod2 <- nls(that~theta.mid(grid,theta),data=lst,start(theta=0.4))
  #list(ols=mod,nls=mod2)
 
-prep.nls.finite <- function(object,k) {
-    mod <- lm(Y~.-1,data=reflow(object,k=k))
+prep.nls.finite.old <- function(object,k) {
+    mod <- lm(Y~.-1,data=reflowold.midas_sim(object,k=k))
     that <- coef(mod)
     lst <- list(that=that,index=1:(object$m*(k+1))-1)
     lst
 }
 
+prep.nls.finite <- function(object,k) {
+    dt <- reflow(object,k=k)
+    that <- coef(lsfit(dt[,-1],dt[,1],intercept=FALSE))
+    list(that=that,index=1:(object$m*(k+1))-1)
+}
+  
 gen.k <- function(object,kmax) {
     res <- foreach(k=0:kmax) %do% {
         mod <- lm(Y~.-1,data=reflow(object,k))
@@ -120,3 +134,46 @@ KZ.k <- function(object) {
     (log(n)+log(xx)+log(sigma2))/2
     
 }
+
+#fit.lambda <- 
+
+calc.with.best <- function(sim,olsmod,method=KZ.k ) {
+##Method should be a function which gets lm object and returns
+##the information criteria such as AIC, BIC. 
+
+    M <- length(sim)
+    if(length(models)!=M)stop("Number of simulations do not coincide")
+
+    res <- foreach(i=1:M,.combine=c) %do% {
+
+        k <- which.min(sapply(olsmod[[i]],method))-1
+        bb <- prep.nls.finite(sim[[i]],k)
+        
+        sn4u <- try(nls(that~theta.u214(index,lambda,beta),data=bb,start=list(lambda=c(-0.01,-0.001),beta=0.5),trace=FALSE))
+
+        sn4r <- try(nls(that~theta.r214(index,lambda,beta),data=bb,start=list(lambda=c(-0.01,-0.001),beta=0.5),trace=FALSE))
+    
+        list(list(k=k,bb=bb,u=sn4u,r=sn4r))
+    }
+    class(res) <- "midas_sim_modtheta"
+    res
+}
+
+calc.with.fixed <- function(sim,olsmod,k=5) {
+    M <- length(sim)
+    if(length(models)!=M)stop("Number of simulations do not coincide")
+
+    res <- foreach(i=1:M,.combine=c) %do% {
+
+        bb <- prep.nls.finite(sim[[i]],k=k)
+        
+        sn4u <- try(nls(that~theta.u214(index,lambda,beta),data=bb,start=list(lambda=c(-0.01,-0.001),beta=0.5),trace=FALSE))
+
+        sn4r <- try(nls(that~theta.r214(index,lambda,beta),data=bb,start=list(lambda=c(-0.01,-0.001),beta=0.5),trace=FALSE))
+    
+        list(list(k=k,bb=bb,u=sn4u,r=sn4r))
+    }
+    class(res) <- "midas_sim_modtheta"
+    res
+}
+
