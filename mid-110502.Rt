@@ -11182,4 +11182,23 @@ Residual standard error: 0.1787 on 36 degrees of freedom
 Number of iterations to convergence: 5 
 Achieved convergence tolerance: 4.733e-07 
 
+> sum(abs(predict(sn5u)-predict(sn5r)))
+[1] 1.240235e-06
+> 
+> sn5un <- fit.lambda(sim5,that~theta.r214(index,lambda,beta),k=12,start=list(lambda=c(-0.01,-0.001),beta=5),trace=TRUE)
+17.29372 :  -0.010 -0.001  5.000 
+16.83618 :  -0.184408982  0.004019092  1.804664938 
+16.54761 :  -0.59866718  0.01431472  1.43231158 
+16.46206 :  -1.46351743  0.03582038  0.71781845 
+16.13477 :  -4.8622262  0.1205345  0.7944382 
+Error in nls(formula, data = bb, ...) : gradient singulier
+> 
+> sn5un <- fit.lambda(sim5,that~theta.r214(index,lambda,beta),k=12,start=list(lambda=c(-0.01,-0.001),beta=0.5),trace=TRUE)
+17.02157 :  -0.010 -0.001  0.500 
+16.87021 :  -0.44602240  0.01154773  0.82616624 
+16.43359 :  -0.99381868  0.02365882  1.00696149 
+16.29810 :  -2.59794652  0.06452764  0.85748198 
+16.17870 :  -10.6374052   0.2647565   0.6892035 
+Error in numericDeriv(form[[3L]], names(ind), env) : 
+  Valeur manquante ou infinie obtenue au cours du calcul du modèle
 > 
