@@ -1,4 +1,6 @@
 ##Rcpp related code
+library(Rcpp)
+library(inline)
 
 src <-
       'NumericVector X(x);
