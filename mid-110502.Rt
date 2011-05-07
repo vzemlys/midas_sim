@@ -10085,4 +10085,1101 @@ result.16 result.14 result.10  result.9
 
  9 10 11 12 13 14 15 
  7 36 27 13 13  3  1 
+> save.image()
+> ls()
+ [1] "aa"                  "bb"                  "calc.with.best"     
+ [4] "calc.with.fixed"     "cc"                  "cr"                 
+ [7] "cu"                  "dd"                  "ee"                 
+[10] "gen.k"               "i"                   "IC4.100"            
+[13] "k"                   "k3.100"              "kk"                 
+[16] "KZ.k"                "modl"                "modl3.100"          
+[19] "modl4.100"           "nls3.100.1"          "pnls3.100.1"        
+[22] "prep.nls.finite"     "prep.nls.finite.old" "prep.nls.infty"     
+[25] "rcppreflow"          "reflow"              "reflow.midas_sim"   
+[28] "reflowcc.midas_sim"  "reflowold.midas_sim" "rr"                 
+[31] "sim.X"               "sim.Y.finite"        "sim.Y.infty"        
+[34] "sim3"                "sim3.100"            "sim4"               
+[37] "sim4.100"            "sim4dif"             "sim4dif.5"          
+[40] "sim4ur"              "sim4ur.5"            "sim4urr"            
+[43] "sim4urr.5"           "sn4"                 "sn4r"               
+[46] "sn4u"                "src"                 "theta.214"          
+[49] "theta.216"           "theta.ar"            "theta.mid"          
+[52] "theta.mid2"          "theta.r214"          "theta.sin"          
+[55] "theta.u214"          "v1"                  "v2"                 
+[58] "vv"                 
+> sapply(ls(),function(r)eval(parse(text=paste("object.size(",r,")",sep="")))
++ )
+                 aa                  bb      calc.with.best     calc.with.fixed 
+              73392               11496               24512               22168 
+                 cc                  cr                  cu                  dd 
+              18384                2960                2960                3400 
+                 ee               gen.k                   i             IC4.100 
+               2960               12440                  48              240840 
+                  k              k3.100                  kk                KZ.k 
+                 48                5640           250774440               13160 
+               modl           modl3.100           modl4.100          nls3.100.1 
+            2507736           250774440              240840             3636040 
+        pnls3.100.1     prep.nls.finite prep.nls.finite.old      prep.nls.infty 
+              99240                9152                9792                9168 
+         rcppreflow              reflow    reflow.midas_sim  reflowcc.midas_sim 
+               2360                 904               11560               11560 
+reflowold.midas_sim                  rr               sim.X        sim.Y.finite 
+              16960                2960                8168               25088 
+        sim.Y.infty                sim3            sim3.100                sim4 
+              25392               55776              802440               55776 
+           sim4.100             sim4dif           sim4dif.5              sim4ur 
+            7340040               91560               52312             7795080 
+           sim4ur.5             sim4urr           sim4urr.5                 sn4 
+            7584464             7711168             7544632               36856 
+               sn4r                sn4u                 src           theta.214 
+              36856               36856                 384                7360 
+          theta.216            theta.ar           theta.mid          theta.mid2 
+               5976                3856                7712                8048 
+         theta.r214           theta.sin          theta.u214                  v1 
+               7536                9608                5784               18424 
+                 v2                  vv 
+              12160                 840 
+> aa <- sapply(ls(),function(r)eval(parse(text=paste("object.size(",r,")",sep=""))))
+> aa/1024^2
+                 aa                  bb      calc.with.best     calc.with.fixed 
+       6.999207e-02        1.096344e-02        2.337646e-02        2.114105e-02 
+                 cc                  cr                  cu                  dd 
+       1.753235e-02        2.822876e-03        2.822876e-03        3.242493e-03 
+                 ee               gen.k                   i             IC4.100 
+       2.822876e-03        1.186371e-02        4.577637e-05        2.296829e-01 
+                  k              k3.100                  kk                KZ.k 
+       4.577637e-05        5.378723e-03        2.391571e+02        1.255035e-02 
+               modl           modl3.100           modl4.100          nls3.100.1 
+       2.391563e+00        2.391571e+02        2.296829e-01        3.467598e+00 
+        pnls3.100.1     prep.nls.finite prep.nls.finite.old      prep.nls.infty 
+       9.464264e-02        8.728027e-03        9.338379e-03        8.743286e-03 
+         rcppreflow              reflow    reflow.midas_sim  reflowcc.midas_sim 
+       2.250671e-03        8.621216e-04        1.102448e-02        1.102448e-02 
+reflowold.midas_sim                  rr               sim.X        sim.Y.finite 
+       1.617432e-02        2.822876e-03        7.789612e-03        2.392578e-02 
+        sim.Y.infty                sim3            sim3.100                sim4 
+       2.421570e-02        5.319214e-02        7.652664e-01        5.319214e-02 
+           sim4.100             sim4dif           sim4dif.5              sim4ur 
+       7.000008e+00        8.731842e-02        4.988861e-02        7.433968e+00 
+           sim4ur.5             sim4urr           sim4urr.5                 sn4 
+       7.233109e+00        7.353943e+00        7.195122e+00        3.514862e-02 
+               sn4r                sn4u                 src           theta.214 
+       3.514862e-02        3.514862e-02        3.662109e-04        7.019043e-03 
+          theta.216            theta.ar           theta.mid          theta.mid2 
+       5.699158e-03        3.677368e-03        7.354736e-03        7.675171e-03 
+         theta.r214           theta.sin          theta.u214                  v1 
+       7.186890e-03        9.162903e-03        5.516052e-03        1.757050e-02 
+                 v2                  vv 
+       1.159668e-02        8.010864e-04 
+> sort(round(aa/1024^2,0))
+                 aa                  bb      calc.with.best     calc.with.fixed 
+                  0                   0                   0                   0 
+                 cc                  cr                  cu                  dd 
+                  0                   0                   0                   0 
+                 ee               gen.k                   i             IC4.100 
+                  0                   0                   0                   0 
+                  k              k3.100                KZ.k           modl4.100 
+                  0                   0                   0                   0 
+        pnls3.100.1     prep.nls.finite prep.nls.finite.old      prep.nls.infty 
+                  0                   0                   0                   0 
+         rcppreflow              reflow    reflow.midas_sim  reflowcc.midas_sim 
+                  0                   0                   0                   0 
+reflowold.midas_sim                  rr               sim.X        sim.Y.finite 
+                  0                   0                   0                   0 
+        sim.Y.infty                sim3                sim4             sim4dif 
+                  0                   0                   0                   0 
+          sim4dif.5                 sn4                sn4r                sn4u 
+                  0                   0                   0                   0 
+                src           theta.214           theta.216            theta.ar 
+                  0                   0                   0                   0 
+          theta.mid          theta.mid2          theta.r214           theta.sin 
+                  0                   0                   0                   0 
+         theta.u214                  v1                  v2                  vv 
+                  0                   0                   0                   0 
+           sim3.100                modl          nls3.100.1            sim4.100 
+                  1                   2                   3                   7 
+             sim4ur            sim4ur.5             sim4urr           sim4urr.5 
+                  7                   7                   7                   7 
+                 kk           modl3.100 
+                239                 239 
+> rm(kk)
+> rm(modl3.100)
+> save.image()
+> gc()
+          used (Mb) gc trigger  (Mb) max used  (Mb)
+Ncells  455496 24.4    3534975 188.8  4418719 236.0
+Vcells 1853919 14.2   54042175 412.4 57416973 438.1
+> gc()
+          used (Mb) gc trigger  (Mb) max used  (Mb)
+Ncells  455500 24.4    2827980 151.1  4418719 236.0
+Vcells 1853941 14.2   43233740 329.9 57416973 438.1
+> gc()
+          used (Mb) gc trigger  (Mb) max used  (Mb)
+Ncells  455500 24.4    2262384 120.9  4418719 236.0
+Vcells 1853941 14.2   34586992 263.9 57416973 438.1
+> gc()
+          used (Mb) gc trigger  (Mb) max used  (Mb)
+Ncells  455500 24.4    1809907  96.7  4418719 236.0
+Vcells 1853941 14.2   27669593 211.2 57416973 438.1
+> gc()
+          used (Mb) gc trigger  (Mb) max used  (Mb)
+Ncells  455500 24.4    1447925  77.4  4418719 236.0
+Vcells 1853941 14.2   22135674 168.9 57416973 438.1
+> gc()
+          used (Mb) gc trigger  (Mb) max used  (Mb)
+Ncells  455500 24.4    1447925  77.4  4418719 236.0
+Vcells 1853941 14.2   17708539 135.2 57416973 438.1
+> aa <- sapply(ls(),function(r)eval(parse(text=paste("object.size(",r,")",sep=""))))
+> sort(round(aa/1024^2,0))
+                 aa                  bb      calc.with.best     calc.with.fixed 
+                  0                   0                   0                   0 
+                 cc                  cr                  cu                  dd 
+                  0                   0                   0                   0 
+                 ee               gen.k                   i             IC4.100 
+                  0                   0                   0                   0 
+                  k              k3.100                KZ.k           modl4.100 
+                  0                   0                   0                   0 
+        pnls3.100.1     prep.nls.finite prep.nls.finite.old      prep.nls.infty 
+                  0                   0                   0                   0 
+         rcppreflow              reflow    reflow.midas_sim  reflowcc.midas_sim 
+                  0                   0                   0                   0 
+reflowold.midas_sim                  rr               sim.X        sim.Y.finite 
+                  0                   0                   0                   0 
+        sim.Y.infty                sim3                sim4             sim4dif 
+                  0                   0                   0                   0 
+          sim4dif.5                 sn4                sn4r                sn4u 
+                  0                   0                   0                   0 
+                src           theta.214           theta.216            theta.ar 
+                  0                   0                   0                   0 
+          theta.mid          theta.mid2          theta.r214           theta.sin 
+                  0                   0                   0                   0 
+         theta.u214                  v1                  v2                  vv 
+                  0                   0                   0                   0 
+           sim3.100                modl          nls3.100.1            sim4.100 
+                  1                   2                   3                   7 
+             sim4ur            sim4ur.5             sim4urr           sim4urr.5 
+                  7                   7                   7                   7 
+> save.image()
+> gc()
+          used (Mb) gc trigger  (Mb) max used  (Mb)
+Ncells  455496 24.4    1447925  77.4  4418719 236.0
+Vcells 1853915 14.2   14166831 108.1 57416973 438.1
+> center
+Erreur : objet 'center' introuvable
+> ?center
+> form <- formula(~a)
+> form
+~a
+> form[[1]]
+`~`
+> form[[2]]
+a
+> form[[3]]
+Erreur dans form[[3]] : indice hors limites
+> form[[1]]
+`~`
+> form[[3]] <- as.name("y")
+> form
+a ~ y
+> form
+a ~ y
+> form
+a ~ y
+> form <- formula(~a)
+> form
+~a
+> (-1)^(1:10)
+ [1] -1  1 -1  1 -1  1 -1  1 -1  1
+> sim4ur[[1]]$u
+Nonlinear regression model
+  model:  that ~ theta.u214(index, lambda, beta) 
+   data:  bb 
+  lambda1   lambda2      beta 
+ 0.008252 -0.001500  0.866886 
+ residual sum-of-squares: 0.7786
+
+Number of iterations to convergence: 4 
+Achieved convergence tolerance: 1.378e-06 
+> names(sim4ur[[1]]$u)
+[1] "m"           "convInfo"    "data"        "call"        "dataClasses"
+[6] "control"    
+> sim4ur[[1]]$u$m
+$resid
+function () 
+resid
+<environment: 0x1404a9f58>
+
+$fitted
+function () 
+rhs
+<environment: 0x1404a9f58>
+
+$formula
+function () 
+form
+<environment: 0x1404a9f58>
+
+$deviance
+function () 
+dev
+<environment: 0x1404a9f58>
+
+$lhs
+function () 
+lhs
+<environment: 0x1404a9f58>
+
+$gradient
+function () 
+.swts * attr(rhs, "gradient")
+<environment: 0x1404a9f58>
+
+$conv
+function () 
+{
+    if (npar == 0) 
+        return(0)
+    rr <- qr.qty(QR, resid)
+    sqrt(sum(rr[1L:npar]^2)/sum(rr[-(1L:npar)]^2))
+}
+<environment: 0x1404a9f58>
+
+$incr
+function () 
+qr.coef(QR, resid)
+<environment: 0x1404a9f58>
+
+$setVarying
+function (vary = rep(TRUE, length(useParams))) 
+{
+    assign("useParams", if (is.character(vary)) {
+        temp <- logical(length(useParams))
+        temp[unlist(ind[vary])] <- TRUE
+        temp
+    }
+    else if (is.logical(vary) && length(vary) != length(useParams)) 
+        stop("setVarying : 'vary' length must match length of parameters")
+    else {
+        vary
+    }, envir = thisEnv)
+    gradCall[[length(gradCall) - 1L]] <<- useParams
+    if (all(useParams)) {
+        assign("setPars", setPars.noVarying, envir = thisEnv)
+        assign("getPars", getPars.noVarying, envir = thisEnv)
+        assign("getRHS", getRHS.noVarying, envir = thisEnv)
+        assign("npar", length(useParams), envir = thisEnv)
+    }
+    else {
+        assign("setPars", setPars.varying, envir = thisEnv)
+        assign("getPars", getPars.varying, envir = thisEnv)
+        assign("getRHS", getRHS.varying, envir = thisEnv)
+        assign("npar", length(seq_along(useParams)[useParams]), 
+            envir = thisEnv)
+    }
+}
+<environment: 0x1404a9f58>
+
+$setPars
+function (newPars) 
+{
+    setPars(newPars)
+    assign("resid", .swts * (lhs - assign("rhs", getRHS(), envir = thisEnv)), 
+        envir = thisEnv)
+    assign("dev", sum(resid^2), envir = thisEnv)
+    assign("QR", qr(.swts * attr(rhs, "gradient")), envir = thisEnv)
+    return(QR$rank < min(dim(QR$qr)))
+}
+<environment: 0x1404a9f58>
+
+$getPars
+function () 
+getPars()
+<environment: 0x1404a9f58>
+
+$getAllPars
+function () 
+getPars()
+<environment: 0x1404a9f58>
+
+$getEnv
+function () 
+env
+<environment: 0x1404a9f58>
+
+$trace
+function () 
+cat(format(dev), ": ", format(getPars()), "\n")
+<environment: 0x1404a9f58>
+
+$Rmat
+function () 
+qr.R(QR)
+<environment: 0x1404a9f58>
+
+$predict
+function (newdata = list(), qr = FALSE) 
+eval(form[[3L]], as.list(newdata), env)
+<environment: 0x1404a9f58>
+
+attr(,"class")
+[1] "nlsModel"
+> ?nlsnls                   package:stats                    R Documentation
+
+Nonlinear Least Squares
+
+Description:
+
+     Determine the nonlinear (weighted) least-squares estimates of the
+     parameters of a nonlinear model.
+
+Usage:
+
+     nls(formula, data, start, control, algorithm,
+         trace, subset, weights, na.action, model,
+         lower, upper, ...)
+     
+Arguments:
+
+ formula: a nonlinear model formula including variables and parameters.
+          Will be coerced to a formula if necessary.
+
+    data: an optional data frame in which to evaluate the variables in
+          ‘formula’ and ‘weights’.  Can also be a list or an
+          environment, but not a matrix.
+
+   start: a named list or named numeric vector of starting estimates.
+          When ‘start’ is missing, a very cheap guess for ‘start’ is
+          tried (if ‘algorithm != "plinear"’).
+
+ control: an optional list of control settings.  See ‘nls.control’ for
+          the names of the settable control values and their effect.
+
+algorithm: character string specifying the algorithm to use.  The
+          default algorithm is a Gauss-Newton algorithm.  Other
+          possible values are ‘"plinear"’ for the Golub-Pereyra
+          algorithm for partially linear least-squares models and
+          ‘"port"’ for the ‘nl2sol’ algorithm from the Port library -
+          see the references.
+
+   trace: logical value indicating if a trace of the iteration progress
+          should be printed.  Default is ‘FALSE’.  If ‘TRUE’ the
+          residual (weighted) sum-of-squares and the parameter values
+          are printed at the conclusion of each iteration.  When the
+          ‘"plinear"’ algorithm is used, the conditional estimates of
+          the linear parameters are printed after the nonlinear
+          parameters.  When the ‘"port"’ algorithm is used the
+          objective function value printed is half the residual
+          (weighted) sum-of-squares.
+
+  subset: an optional vector specifying a subset of observations to be
+          used in the fitting process.
+
+ weights: an optional numeric vector of (fixed) weights.  When present,
+          the objective function is weighted least squares.
+
+na.action: a function which indicates what should happen when the data
+          contain ‘NA’s.  The default is set by the ‘na.action’ setting
+          of ‘options’, and is ‘na.fail’ if that is unset.  The
+          ‘factory-fresh’ default is ‘na.omit’.  Value ‘na.exclude’ can
+          be useful.
+
+   model: logical.  If true, the model frame is returned as part of the
+          object. Default is ‘FALSE’.
+
+lower, upper: vectors of lower and upper bounds, replicated to be as
+          long as ‘start’.  If unspecified, all parameters are assumed
+          to be unconstrained.  Bounds can only be used with the
+          ‘"port"’ algorithm.  They are ignored, with a warning, if
+          given for other algorithms.
+
+     ...: Additional optional arguments.  None are used at present.
+
+Details:
+
+     An ‘nls’ object is a type of fitted model object.  It has methods
+     for the generic functions ‘anova’, ‘coef’, ‘confint’, ‘deviance’,
+     ‘df.residual’, ‘fitted’, ‘formula’, ‘logLik’, ‘predict’, ‘print’,
+     ‘profile’, ‘residuals’, ‘summary’, ‘vcov’ and ‘weights’.
+
+     Variables in ‘formula’ (and ‘weights’ if not missing) are looked
+     for first in ‘data’, then the environment of ‘formula’ and finally
+     along the search path.  Functions in ‘formula’ are searched for
+     first in the environment of ‘formula’ and then along the search
+     path.
+
+     Arguments ‘subset’ and ‘na.action’ are supported only when all the
+     variables in the formula taken from ‘data’ are of the same length:
+     other cases give a warning.
+
+     Note that the ‘anova’ method does not check that the models are
+     nested: this cannot easily be done automatically, so use with
+     care.
+
+Value:
+
+     A list of
+
+       m: an ‘nlsModel’ object incorporating the model.
+
+    data: the expression that was passed to ‘nls’ as the data argument.
+          The actual data values are present in the environment of the
+          ‘m’ component.
+
+    call: the matched call with several components, notably
+          ‘algorithm’.
+
+na.action: the ‘"na.action"’ attribute (if any) of the model frame.
+
+dataClasses: the ‘"dataClasses"’ attribute (if any) of the ‘"terms"’
+          attribute of the model frame.
+
+   model: if ‘model = TRUE’, the model frame.
+
+ weights: if ‘weights’ is supplied, the weights.
+
+convInfo: when ‘algorithm’ is not "port", a list with convergence
+          information.
+
+ control: the control ‘list’ used, see the ‘control’ argument.
+
+convergence, message: for an ‘algorithm = "port"’ fit only, a
+          convergence code (‘0’ for convergence) and message.
+     *Note* that setting ‘warnOnly = TRUE’ in the ‘control’ argument
+     (see ‘nls.control’) returns a non-converged object (since R
+     version 2.5.0) which might be useful for further convergence
+     analysis, _but *not* for inference_.
+
+Warning:
+
+     *Do not use ‘nls’ on artificial "zero-residual" data.*
+
+     The ‘nls’ function uses a relative-offset convergence criterion
+     that compares the numerical imprecision at the current parameter
+     estimates to the residual sum-of-squares.  This performs well on
+     data of the form
+
+                            y = f(x, theta) + eps                       
+     
+     (with ‘var(eps) > 0’).  It fails to indicate convergence on data
+     of the form
+
+                               y = f(x, theta)                          
+     
+     because the criterion amounts to comparing two components of the
+     round-off error.  If you wish to test ‘nls’ on artificial data
+     please add a noise component, as shown in the example below.
+
+     The ‘algorithm = "port"’ code appears unfinished, and does not
+     even check that the starting value is within the bounds.  Use with
+     caution, especially where bounds are supplied.
+
+Author(s):
+
+     Douglas M. Bates and Saikat DebRoy
+
+References:
+
+     Bates, D. M. and Watts, D. G. (1988) _Nonlinear Regression
+     Analysis and Its Applications_, Wiley
+
+     Bates, D. M. and Chambers, J. M. (1992) _Nonlinear models._
+     Chapter 10 of _Statistical Models in S_ eds J. M. Chambers and T.
+     J. Hastie, Wadsworth & Brooks/Cole.
+
+     <URL: http://www.netlib.org/port/> for the Port library
+     documentation.
+
+See Also:
+
+     ‘summary.nls’, ‘predict.nls’, ‘profile.nls’.
+
+Examples:
+
+     require(graphics)
+     
+     DNase1 <- subset(DNase, Run == 1)
+     
+     ## using a selfStart model
+     fm1DNase1 <- nls(density ~ SSlogis(log(conc), Asym, xmid, scal), DNase1)
+     summary(fm1DNase1)
+     ## the coefficients only:
+     coef(fm1DNase1)
+     ## including their SE, etc:
+     coef(summary(fm1DNase1))
+     
+     ## using conditional linearity
+     fm2DNase1 <- nls(density ~ 1/(1 + exp((xmid - log(conc))/scal)),
+                      data = DNase1,
+                      start = list(xmid = 0, scal = 1),
+                      algorithm = "plinear", trace = TRUE)
+     summary(fm2DNase1)
+     
+     ## without conditional linearity
+     fm3DNase1 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
+                      data = DNase1,
+                      start = list(Asym = 3, xmid = 0, scal = 1),
+                      trace = TRUE)
+     summary(fm3DNase1)
+     
+     ## using Port's nl2sol algorithm
+     fm4DNase1 <- nls(density ~ Asym/(1 + exp((xmid - log(conc))/scal)),
+                      data = DNase1,
+                      start = list(Asym = 3, xmid = 0, scal = 1),
+                      trace = TRUE, algorithm = "port")
+     summary(fm4DNase1)
+     
+     ## weighted nonlinear regression
+     Treated <- Puromycin[Puromycin$state == "treated", ]
+     weighted.MM <- function(resp, conc, Vm, K)
+     {
+         ## Purpose: exactly as white book p. 451 -- RHS for nls()
+         ##  Weighted version of Michaelis-Menten model
+         ## ----------------------------------------------------------
+         ## Arguments: 'y', 'x' and the two parameters (see book)
+         ## ----------------------------------------------------------
+         ## Author: Martin Maechler, Date: 23 Mar 2001
+     
+         pred <- (Vm * conc)/(K + conc)
+         (resp - pred) / sqrt(pred)
+     }
+     
+     Pur.wt <- nls( ~ weighted.MM(rate, conc, Vm, K), data = Treated,
+                   start = list(Vm = 200, K = 0.1),
+                   trace = TRUE)
+     summary(Pur.wt)
+     
+     ## Passing arguments using a list that can not be coerced to a data.frame
+     lisTreat <- with(Treated,
+                      list(conc1 = conc[1], conc.1 = conc[-1], rate = rate))
+     
+     weighted.MM1 <- function(resp, conc1, conc.1, Vm, K)
+     {
+          conc <- c(conc1, conc.1)
+          pred <- (Vm * conc)/(K + conc)
+         (resp - pred) / sqrt(pred)
+     }
+     Pur.wt1 <- nls( ~ weighted.MM1(rate, conc1, conc.1, Vm, K),
+                    data = lisTreat, start = list(Vm = 200, K = 0.1))
+     stopifnot(all.equal(coef(Pur.wt), coef(Pur.wt1)))
+     
+     ## Chambers and Hastie (1992) Statistical Models in S  (p. 537):
+     ## If the value of the right side [of formula] has an attribute called
+     ## 'gradient' this should be a matrix with the number of rows equal
+     ## to the length of the response and one column for each parameter.
+     
+     weighted.MM.grad <- function(resp, conc1, conc.1, Vm, K)
+     {
+       conc <- c(conc1, conc.1)
+     
+       K.conc <- K+conc
+       dy.dV <- conc/K.conc
+       dy.dK <- -Vm*dy.dV/K.conc
+       pred <- Vm*dy.dV
+       pred.5 <- sqrt(pred)
+       dev <- (resp - pred) / pred.5
+       Ddev <- -0.5*(resp+pred)/(pred.5*pred)
+       attr(dev, "gradient") <- Ddev * cbind(Vm = dy.dV, K = dy.dK)
+       dev
+     }
+     
+     Pur.wt.grad <- nls( ~ weighted.MM.grad(rate, conc1, conc.1, Vm, K),
+                        data = lisTreat, start = list(Vm = 200, K = 0.1))
+     
+     rbind(coef(Pur.wt), coef(Pur.wt1), coef(Pur.wt.grad))
+     
+     ## In this example, there seems no advantage to providing the gradient.
+     ## In other cases, there might be.
+     
+     
+     ## The two examples below show that you can fit a model to
+     ## artificial data with noise but not to artificial data
+     ## without noise.
+     x <- 1:10
+     y <- 2*x + 3                            # perfect fit
+     yeps <- y + rnorm(length(y), sd = 0.01) # added noise
+     nls(yeps ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
+         trace = TRUE)
+     ## Not run:
+     
+     ## terminates in an error, because convergence cannot be confirmed:
+     nls(y ~ a + b*x, start = list(a = 0.12345, b = 0.54321),
+          trace = TRUE)
+     ## End(Not run)
+     
+     
+     ## the nls() internal cheap guess for starting values can be sufficient:
+     
+     x <- -(1:100)/10
+     y <- 100 + 10 * exp(x / 2) + rnorm(x)/10
+     nlmod <- nls(y ~  Const + A * exp(B * x), trace=TRUE)
+     
+     plot(x,y, main = "nls(*), data, true function and fit, n=100")
+     curve(100 + 10 * exp(x / 2), col=4, add = TRUE)
+     lines(x, predict(nlmod), col=2)
+     
+     
+     ## The muscle dataset in MASS is from an experiment on muscle
+     ## contraction on 21 animals.  The observed variables are Strip
+     ## (identifier of muscle), Conc (Cacl concentration) and Length
+     ## (resulting length of muscle section).
+     utils::data(muscle, package = "MASS")
+     
+     ## The non linear model considered is
+     ##       Length = alpha + beta*exp(-Conc/theta) + error
+     ## where theta is constant but alpha and beta may vary with Strip.
+     
+     with(muscle, table(Strip)) # 2,3 or 4 obs per strip
+     
+     ## We first use the plinear algorithm to fit an overall model,
+     ## ignoring that alpha and beta might vary with Strip.
+     
+     musc.1 <- nls(Length ~ cbind(1, exp(-Conc/th)), muscle,
+                   start = list(th=1), algorithm="plinear")
+     summary(musc.1)
+     
+     ## Then we use nls' indexing feature for parameters in non-linear
+     ## models to use the conventional algorithm to fit a model in which
+     ## alpha and beta vary with Strip.  The starting values are provided
+     ## by the previously fitted model.
+     ## Note that with indexed parameters, the starting values must be
+     ## given in a list (with names):
+     b <- coef(musc.1)
+     musc.2 <- nls(Length ~ a[Strip] + b[Strip]*exp(-Conc/th),
+                   muscle,
+                   start = list(a=rep(b[2],21), b=rep(b[3],21), th=b[1]))
+     summary(musc.2)
+     
+
+> ?nls  ^C ^C
+> Save workspace image? [y/n/c]: y
+
+Process R finished at Sat May  7 17:34:22 2011
+
+
+R version 2.11.1 (2010-05-31)
+Copyright (C) 2010 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+
+R est un logiciel libre livr'e sans AUCUNE GARANTIE.
+Vous pouvez le redistribuer sous certaines conditions.
+Tapez 'license()' ou 'licence()' pour plus de d'etails.
+
+R est un projet collaboratif avec de nombreux contributeurs.
+Tapez 'contributors()' pour plus d'information et
+'citation()' pour la facon de le citer dans les publications.
+
+Tapez 'demo()' pour des d'emonstrations, 'help()' pour l'aide
+en ligne ou 'help.start()' pour obtenir l'aide au format HTML.
+Tapez 'q()' pour quitter R.
+
+[1] "fr_FR/fr_FR/fr_FR/C/fr_FR/C"
+[Sauvegarde de la session précédente restaurée]
+
+
+ Started working: Sat May  7 17:34:41 2011 
+> .help.ESS <- help
+> options(STERM='iESS', editor='emacsclient')
+> ?nls
+> predict(sim4ur[[1]]$u)
+ [1] 0.8727594 0.8760400 0.8766988 0.8747297 0.8701505 0.8630021 0.8533484
+ [8] 0.8412749 0.8268876 0.8103116 0.7916890 0.7711773 0.7489466 0.7251778
+[15] 0.7000599 0.6737874 0.6465581 0.6185706 0.5900218 0.5611045 0.5320060
+[22] 0.5029054 0.4739725 0.4453659 0.4172322 0.3897047 0.3629030 0.3369322
+[29] 0.3118828 0.2878308 0.2648380 0.2429519 0.2222067 0.2026242 0.1842138
+[36] 0.1669746 0.1508952 0.1359557 0.1221284 0.1093787
+> sim4ur[[1]]$u$data
+bb
+> sim4ur[[1]]$u$data$bb
+Erreur dans sim4ur[[1]]$u$data$bb : objet de type 'symbol' non indiçable
+> sim4ur[[1]]$u$data
+bb
+> length(sim4.100)
+[1] 100
+> 
+> sim5 <- sim.Y.finite(100,3,1000,tfun=theta.us214,xfun=sim.X,lambda=c(-0.01,-0.001),beta=1)
+Erreur dans sim.Y.finite(100, 3, 1000, tfun = theta.us214, xfun = sim.X,  : 
+  impossible de trouver la fonction "%do%"
+> 
+> library(foreach)
+Le chargement a nécessité le package : iterators
+Le chargement a nécessité le package : codetools
+foreach: simple, scalable parallel programming from REvolution Computing
+Use REvolution R for scalability, fault tolerance and more.
+http://www.revolution-computing.com
+> library(stats4)
+> library(ggplot2)
+Le chargement a nécessité le package : reshape
+Le chargement a nécessité le package : plyr
+
+Attachement du package : 'reshape'
+
+The following object(s) are masked from 'package:plyr':
+
+    round_any
+
+Le chargement a nécessité le package : grid
+Le chargement a nécessité le package : proto
+> 
+> sim5 <- sim.Y.finite(100,3,1000,tfun=theta.us214,xfun=sim.X,lambda=c(-0.01,-0.001),beta=1)
+> 
+> sn5u <- fit.lambda(sim5,that~theta.us214(index,lambda,beta),k=5,start=list(lambda=c(-0.01,-0.001),beta=5),trace=TRUE)
+Erreur dans .Primitive(".Call")(<pointer: 0x0>, x, dims) : 
+  valeur NULL passée comme adresse symbolique
+> source("10code.R")
+> source("11code.R")
+Erreur dans eval.with.vis(expr, envir, enclos) : 
+  impossible de trouver la fonction "cxxfunction"
+> source("10code.R")
+> source("11code.R")
+> 
+> sim5 <- sim.Y.finite(100,3,1000,tfun=theta.us214,xfun=sim.X,lambda=c(-0.01,-0.001),beta=1)
+> 
+> sn5u <- fit.lambda(sim5,that~theta.us214(index,lambda,beta),k=5,start=list(lambda=c(-0.01,-0.001),beta=5),trace=TRUE)
+216.2056 :  -0.010 -0.001  5.000 
+0.4648269 :  -0.0167673643 -0.0006657676  0.9349825249 
+0.3260982 :  -0.047565913  0.000854682  0.936577796 
+0.3255465 :  -0.0505029792  0.0009942408  0.9400215902 
+0.3255465 :  -0.0504943462  0.0009931343  0.9400234067 
+> sim5$theta
+                  [,1]
+   [1,]   9.890603e-01
+   [2,]  -9.762857e-01
+   [3,]   9.617507e-01
+   [4,]  -9.455391e-01
+   [5,]   9.277435e-01
+   [6,]  -9.084640e-01
+   [7,]   8.878078e-01
+   [8,]  -8.658877e-01
+   [9,]   8.428216e-01
+  [10,]  -8.187308e-01
+  [11,]   7.937395e-01
+  [12,]  -7.679735e-01
+  [13,]   7.415594e-01
+  [14,]  -7.146231e-01
+  [15,]   6.872893e-01
+  [16,]  -6.596803e-01
+  [17,]   6.319152e-01
+  [18,]  -6.041094e-01
+  [19,]   5.763731e-01
+  [20,]  -5.488116e-01
+  [21,]   5.215240e-01
+  [22,]  -4.946029e-01
+  [23,]   4.681343e-01
+  [24,]  -4.421969e-01
+  [25,]   4.168620e-01
+  [26,]  -3.921935e-01
+  [27,]   3.682475e-01
+  [28,]  -3.450728e-01
+  [29,]   3.227104e-01
+  [30,]  -3.011942e-01
+  [31,]   2.805509e-01
+  [32,]  -2.608004e-01
+  [33,]   2.419559e-01
+  [34,]  -2.240245e-01
+  [35,]   2.070076e-01
+  [36,]  -1.909011e-01
+  [37,]   1.756960e-01
+  [38,]  -1.613789e-01
+  [39,]   1.479324e-01
+  [40,]  -1.353353e-01
+  [41,]   1.235635e-01
+  [42,]  -1.125903e-01
+  [43,]   1.023865e-01
+  [44,]  -9.292152e-02
+  [45,]   8.416299e-02
+  [46,]  -7.607771e-02
+  [47,]   6.863175e-02
+  [48,]  -6.179085e-02
+  [49,]   5.552066e-02
+  [50,]  -4.978707e-02
+  [51,]   4.455638e-02
+  [52,]  -3.979556e-02
+  [53,]   3.547241e-02
+  [54,]  -3.155573e-02
+  [55,]   2.801543e-02
+  [56,]  -2.482262e-02
+  [57,]   2.194974e-02
+  [58,]  -1.937058e-02
+  [59,]   1.706032e-02
+  [60,]  -1.499558e-02
+  [61,]   1.315439e-02
+  [62,]  -1.151621e-02
+  [63,]   1.006189e-02
+  [64,]  -8.773671e-03
+  [65,]   7.635094e-03
+  [66,]  -6.630998e-03
+  [67,]   5.747444e-03
+  [68,]  -4.971667e-03
+  [69,]   4.292011e-03
+  [70,]  -3.697864e-03
+  [71,]   3.179600e-03
+  [72,]  -2.728509e-03
+  [73,]   2.336736e-03
+  [74,]  -1.997218e-03
+  [75,]   1.703620e-03
+  [76,]  -1.450278e-03
+  [77,]   1.232143e-03
+  [78,]  -1.044727e-03
+  [79,]   8.840473e-04
+  [80,]  -7.465858e-04
+  [81,]   6.292386e-04
+  [82,]  -5.292763e-04
+  [83,]   4.443047e-04
+  [84,]  -3.722295e-04
+  [85,]   3.112233e-04
+  [86,]  -2.596957e-04
+  [87,]   2.162663e-04
+  [88,]  -1.797399e-04
+  [89,]   1.490841e-04
+  [90,]  -1.234098e-04
+  [91,]   1.019529e-04
+  [92,]  -8.405830e-05
+  [93,]   6.916608e-05
+  [94,]  -5.679854e-05
+  [95,]   4.654923e-05
+  [96,]  -3.807320e-05
+  [97,]   3.107832e-05
+  [98,]  -2.531787e-05
+  [99,]   2.058393e-05
+ [100,]  -1.670170e-05
+ [getOption("max.print") est atteint -- 2903 lignes omises ]]
+> 
+> IC5 <- gen.IC(sim5)
+Erreur dans eval(expr, envir, enclos) : 
+  l'argument "kmax" est manquant, avec aucune valeur par défaut
+> 
+> IC5 <- gen.IC(sim5,kmax=15)
+> IC5
+          Lag      AIC      BIC     KZIC
+result.1    0 424.6748 435.0955 2.025539
+result.2    1 409.8566 428.0224 1.994111
+result.3    2 388.6787 414.5284 1.922217
+result.4    3 383.0789 416.5502 1.918470
+result.5    4 371.8033 412.8329 1.881241
+result.6    5 352.6990 401.2227 1.798764
+result.7    6 332.5645 388.5170 1.725857
+result.8    7 307.4293 370.7443 1.626204
+result.9    8 294.7413 365.3514 1.573197
+result.10   9 293.9970 371.8336 1.584067
+result.11  10 287.1254 372.1189 1.608099
+result.12  11 274.5372 366.6167 1.572128
+result.13  12 268.8349 367.9284 1.603448
+result.14  13 269.2296 375.2637 1.631758
+result.15  14 253.9481 366.8480 1.571803
+result.16  15 255.2867 374.9766 1.610532
+> apply(IC5[,-1],2,which.max)
+ AIC  BIC KZIC 
+   1    1    1 
+> apply(IC5[,-1],2,which.min)
+ AIC  BIC KZIC 
+  15    9   15 
+> 
+> sim5 <- sim.Y.finite(100,3,1000,tfun=theta.us214,xfun=sim.X,lambda=c(-0.01,-0.001),beta=1)
+> 
+> IC5 <- gen.IC(sim5,kmax=15)
+> apply(IC5[,-1],2,which.min)
+ AIC  BIC KZIC 
+  15   12   12 
+> 
+> sn5u <- fit.lambda(sim5,that~theta.us214(index,lambda,beta),k=12,start=list(lambda=c(-0.01,-0.001),beta=5),trace=TRUE)
+238.9142 :  -0.010 -0.001  5.000 
+1.225610 :  -0.006798810 -0.001106498  0.950601545 
+1.150194 :   0.006468368 -0.001550529  0.951379344 
+1.150003 :   0.005749369 -0.001534145  0.953612953 
+1.150003 :   0.005779489 -0.001534997  0.953439866 
+1.150003 :   0.005778713 -0.001534981  0.953445316 
+> predict(sn5u)
+ [1]  0.9575001 -0.9586246  0.9568086 -0.9520687  0.9444484 -0.9340174
+ [7]  0.9208701 -0.9051249  0.8869220 -0.8664211  0.8437997 -0.8192500
+[13]  0.7929764 -0.7651927  0.7361191 -0.7059795  0.6749986 -0.6433989
+[19]  0.6113987 -0.5792092  0.5470325 -0.5150597  0.4834690 -0.4524249
+[25]  0.4220765 -0.3925568  0.3639825 -0.3364537  0.3100536 -0.2848493
+[31]  0.2608916 -0.2382165  0.2168454 -0.1967866  0.1780358 -0.1605780
+[37]  0.1443881 -0.1294326  0.1156704
+> predict(sn5u)-sim5$theta
+                 [,1]
+   [1,] -0.0315601993
+   [2,]  0.0176610872
+   [3,] -0.0049421032
+   [4,] -0.0065295870
+   [5,]  0.0167049573
+   [6,] -0.0255533358
+   [7,]  0.0330622860
+   [8,] -0.0392371655
+   [9,]  0.0441003789
+  [10,] -0.0476903501
+  [11,]  0.0500602427
+  [12,] -0.0512764650
+  [13,]  0.0514169973
+  [14,] -0.0505695825
+  [15,]  0.0488298256
+  [16,] -0.0462992430
+  [17,]  0.0430833056
+  [18,] -0.0392895169
+  [19,]  0.0350255632
+  [20,] -0.0303975717
+  [21,]  0.0255085054
+  [22,] -0.0204567206
+  [23,]  0.0153347064
+  [24,] -0.0102280214
+  [25,]  0.0052144355
+  [26,] -0.0003632803
+  [27,] -0.0042649923
+  [28,]  0.0086190522
+  [29,] -0.0126567417
+  [30,]  0.0163449513
+  [31,] -0.0196593364
+  [32,]  0.0225838948
+  [33,] -0.0251104273
+  [34,]  0.0272379014
+  [35,] -0.0289717417
+  [36,]  0.0303230691
+  [37,] -0.0313079094
+  [38,]  0.0319463904
+  [39,] -0.0322619474
+  [40,]  1.0928353627
+  [41,] -1.0821881331
+  [42,]  1.0693988736
+  [43,] -1.0544552649
+  [44,]  1.0373699648
+  [45,] -1.0181803421
+  [46,]  0.9969477938
+  [47,] -0.9737566652
+  [48,]  0.9487128014
+  [49,] -0.9219417673
+  [50,]  0.8935867771
+  [51,] -0.8638063814
+  [52,]  0.8327719639
+  [53,] -0.8006651007
+  [54,]  0.7676748372
+  [55,] -0.7339949393
+  [56,]  0.6998211692
+  [57,] -0.6653486394
+  [58,]  0.6307692894
+  [59,] -0.5962695274
+  [60,]  0.5620280742
+  [61,] -0.5282140371
+  [62,]  0.4949852399
+  [63,] -0.4624868233
+  [64,]  0.4308501259
+  [65,] -0.4001918505
+  [66,]  0.3706135100
+  [67,] -0.3422011471
+  [68,]  0.3150253103
+  [69,] -0.2891412711
+  [70,]  0.2645894579
+  [71,] -0.2413960827
+  [72,]  0.2195739334
+  [73,] -0.1991233033
+  [74,]  0.1800330292
+  [75,] -0.1622816099
+  [76,]  0.1458383775
+  [77,] -0.1306646955
+  [78,]  0.1167151595
+  [79,]  0.9566160322
+  [80,] -0.9578780368
+  [81,]  0.9561793673
+  [82,] -0.9515394466
+  [83,]  0.9440041389
+  [84,] -0.9336451223
+  [85,]  0.9205588635
+  [86,] -0.9048652179
+  [87,]  0.8867056861
+  [88,] -0.8662413633
+  [89,]  0.8436506246
+  [90,] -0.8191265949
+  [91,]  0.7928744538
+  [92,] -0.7651086300
+  [93,]  0.7360499383
+  [94,] -0.7059227150
+  [95,]  0.6749520013
+  [96,] -0.6433608266
+  [97,]  0.6113676338
+  [98,] -0.5791838899
+  [99,]  0.5470119134
+ [100,] -0.5150429488
+ [getOption("max.print") est atteint -- 2903 lignes omises ]]
+> predict(sn5u)-sim5$theta[1:60]
+ [1] -0.0315601993  0.0176610872 -0.0049421032 -0.0065295870  0.0167049573
+ [6] -0.0255533358  0.0330622860 -0.0392371655  0.0441003789 -0.0476903501
+[11]  0.0500602427 -0.0512764650  0.0514169973 -0.0505695825  0.0488298256
+[16] -0.0462992430  0.0430833056 -0.0392895169  0.0350255632 -0.0303975717
+[21]  0.0255085054 -0.0204567206  0.0153347064 -0.0102280214  0.0052144355
+[26] -0.0003632803 -0.0042649923  0.0086190522 -0.0126567417  0.0163449513
+[31] -0.0196593364  0.0225838948 -0.0251104273  0.0272379014 -0.0289717417
+[36]  0.0303230691 -0.0313079094  0.0319463904 -0.0322619474  1.0928353627
+[41] -1.0821881331  1.0693988736 -1.0544552649  1.0373699648 -1.0181803421
+[46]  0.9969477938 -0.9737566652  0.9487128014 -0.9219417673  0.8935867771
+[51] -0.8638063814  0.8327719639 -0.8006651007  0.7676748372 -0.7339949393
+[56]  0.6998211692 -0.6653486394  0.6307692894 -0.5962695274  0.5620280742
+Message d'avis :
+In predict(sn5u) - sim5$theta[1:60] :
+  la taille d'un objet plus long n'est pas multiple de la taille d'un objet plus court
+> length(predict(sn5u))
+[1] 39
+> predict(sn5u)-sim5$theta[1:39]
+ [1] -0.0315601993  0.0176610872 -0.0049421032 -0.0065295870  0.0167049573
+ [6] -0.0255533358  0.0330622860 -0.0392371655  0.0441003789 -0.0476903501
+[11]  0.0500602427 -0.0512764650  0.0514169973 -0.0505695825  0.0488298256
+[16] -0.0462992430  0.0430833056 -0.0392895169  0.0350255632 -0.0303975717
+[21]  0.0255085054 -0.0204567206  0.0153347064 -0.0102280214  0.0052144355
+[26] -0.0003632803 -0.0042649923  0.0086190522 -0.0126567417  0.0163449513
+[31] -0.0196593364  0.0225838948 -0.0251104273  0.0272379014 -0.0289717417
+[36]  0.0303230691 -0.0313079094  0.0319463904 -0.0322619474
+> sum(abs(predict(sn5u)-sim5$theta[1:39]))
+[1] 1.081684
+> 
+> sn5r <- fit.lambda(sim5,that~theta.ur214(index,lambda,beta),k=12,start=list(lambda=c(-0.01,-0.001),beta=5),trace=TRUE)
+Error in eval(expr, envir, enclos) : 
+  impossible de trouver la fonction "theta.ur214"
+> 
+> sn5r <- fit.lambda(sim5,that~theta.rs214(index,lambda,beta),k=12,start=list(lambda=c(-0.01,-0.001),beta=5),trace=TRUE)
+911.1042 :  -0.010 -0.001  5.000 
+1.278936 :  -0.008181050 -0.001060513  0.530071318 
+1.150274 :   0.006870194 -0.001562823  0.530591092 
+1.150003 :   0.005742492 -0.001534065  0.532758611 
+1.150003 :   0.005780055 -0.001535016  0.532637930 
+1.150003 :   0.005778705 -0.001534981  0.532642261 
+> predict(sn5r)
+ [1]  0.9575002 -0.9586247  0.9568087 -0.9520688  0.9444485 -0.9340174
+ [7]  0.9208701 -0.9051249  0.8869220 -0.8664211  0.8437997 -0.8192500
+[13]  0.7929764 -0.7651927  0.7361191 -0.7059795  0.6749985 -0.6433989
+[19]  0.6113987 -0.5792092  0.5470325 -0.5150596  0.4834690 -0.4524249
+[25]  0.4220764 -0.3925567  0.3639825 -0.3364537  0.3100536 -0.2848492
+[31]  0.2608916 -0.2382165  0.2168454 -0.1967865  0.1780358 -0.1605780
+[37]  0.1443881 -0.1294325  0.1156704
+> summary(sn5u)
+
+Formula: that ~ theta.us214(index, lambda, beta)
+
+Parameters:
+          Estimate Std. Error t value Pr(>|t|)    
+lambda1  0.0057787  0.0182459   0.317   0.7533    
+lambda2 -0.0015350  0.0006005  -2.556   0.0149 *  
+beta     0.9534453  0.1080640   8.823 1.58e-10 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 0.1787 on 36 degrees of freedom
+
+Number of iterations to convergence: 5 
+Achieved convergence tolerance: 2.844e-07 
+
+> summary(sn5r)
+
+Formula: that ~ theta.rs214(index, lambda, beta)
+
+Parameters:
+          Estimate Std. Error t value Pr(>|t|)    
+lambda1  0.0057787  0.0182459   0.317   0.7533    
+lambda2 -0.0015350  0.0006005  -2.556   0.0149 *  
+beta     0.5326423  0.0619286   8.601 2.96e-10 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1 
+
+Residual standard error: 0.1787 on 36 degrees of freedom
+
+Number of iterations to convergence: 5 
+Achieved convergence tolerance: 4.733e-07 
+
 > 
