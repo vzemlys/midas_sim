@@ -22,7 +22,7 @@ sim.Y.finite <- function(n,m,k,sde=1,tfun,xfun,...) {
 
 sim.Y.finite.list <- function(n,m,k,M,sde=1,tfun,xfun,...) {
     res <- foreach(i=1:M,.combine=c) %do% {
-        list(sim.Y.finite(n,m,k,sde=sde,tfun=tfum,xfun=xfun,...))
+        list(sim.Y.finite(n,m,k,sde=sde,tfun=tfun,xfun=xfun,...))
     }
     class(res) <- "midas_sim_list"
     res
@@ -46,6 +46,12 @@ theta.r214 <- function(index,lambda,beta,...) {
     beta*epol/sum(epol)
 }
 
+theta.2r214 <- function(index,lambda0,lambda1,beta,...) {
+    pol <- poly((index+1)/100,2,raw=TRUE) %*%c(lambda0,lambda1)
+    epol <- exp(pol)
+    beta*epol/sum(epol)
+}
+  
 theta.u214 <- function(index,lambda,beta,...) {
     pol <- poly(index+1,2,raw=TRUE) %*%lambda
     beta*exp(pol)
@@ -103,10 +109,10 @@ fit.lambda.midas_sim<- function(object,formula,k,...) {
     res
 }
 
-fit.lambda.midas_sim_list <- function(object,formula,k=NULL,...) {
+fit.lambda.midas_sim_list <- function(object,formula,k,...) {
 ##formula must be of form that~function(index,...)
-    if(is.null(k)) res <- lapply(object,fit.lambda,formula=formula,...)
-    else res <- lapply(object,function(l)fit.lambda(object,formula,k=object$k))
+    if(!is.null(k)) res <- lapply(object,fit.lambda,formula=formula,k=k,...)
+    else res <- lapply(object,function(l)fit.lambda(object,formula,k=object$k,...))
     res
 }
 
