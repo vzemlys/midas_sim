@@ -15153,4 +15153,6 @@ sn5r <- nls2(that~theta.2r214(index,lambda0,lambda1,beta),data=reflow(sim5,8),st
   ^C ^C
 > object.size(gr)/1024^2
 15.6695251464844 bytes
-> 
+> Save workspace image? [y/n/c]: y
+
+Process R finished at Thu May 12 10:35:51 2011

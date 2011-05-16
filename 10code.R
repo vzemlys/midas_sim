@@ -46,6 +46,22 @@ theta.r214 <- function(index,lambda,beta,...) {
     beta*epol/sum(epol)
 }
 
+theta.rg214 <- function(index,lambda0,lambda1,beta,...) {
+    i <- (index+1)/100
+    pl <- poly(i,2,raw=TRUE)
+    pol <- pl %*%c(lambda0,lambda1)
+    epol <- exp(pol)[,,drop=TRUE]
+    sepol <- sum(epol)
+    res <- beta*epol/sepol
+    
+    ple <- pl*epol
+    sple <- colSums(ple)
+    Z <- cbind(beta*sweep(pl*sepol,2,sple,"-")*epol/sepol^2,epol/sepol)
+    dimnames(Z) <- list(NULL,c("lambda0","lambda1","beta"))
+    attr(res,"gradient") <- Z
+    res
+}
+
 theta.2r214 <- function(index,lambda0,lambda1,beta,...) {
     pol <- poly((index+1)/100,2,raw=TRUE) %*%c(lambda0,lambda1)
     epol <- exp(pol)
@@ -57,6 +73,11 @@ theta.u214 <- function(index,lambda,beta,...) {
     beta*exp(pol)
 }
 
+theta.uab214 <- function(index,lambda,alpha,beta) {
+    i <- (index+1)/100
+    pol <- poly(i,2,raw=TRUE) %*%lambda
+    (alpha+beta*i)*exp(pol)
+}
 theta.rs214 <- function(index,lambda,beta,...) {
     pol <- poly((index+1),2,raw=TRUE) %*%lambda
     epol <- exp(pol)*((-1)^index)
@@ -100,7 +121,7 @@ KZIC <- function(object) {
     
 }
 
-fit.lambda<- function(object,formula,k,...) UseMethod("fit.lambda")
+fit.lambda<- function(object,formula,k,...)UseMethod("fit.lambda")
 
 fit.lambda.midas_sim<- function(object,formula,k,...) {
 ##formula must be of form that~function(index,...)
@@ -111,8 +132,8 @@ fit.lambda.midas_sim<- function(object,formula,k,...) {
 
 fit.lambda.midas_sim_list <- function(object,formula,k,...) {
 ##formula must be of form that~function(index,...)
-    if(!is.null(k)) res <- lapply(object,fit.lambda,formula=formula,k=k,...)
-    else res <- lapply(object,function(l)fit.lambda(object,formula,k=object$k,...))
+    if(length(k)==1) res <- lapply(object,fit.lambda,formula=formula,k=k,...)
+    else res <- foreach(l=object,ki=k,.combine=c) %do% list(fit.lambda(l,formula,ki,...))
     res
 }
 
