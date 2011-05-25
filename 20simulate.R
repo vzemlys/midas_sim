@@ -36,3 +36,24 @@ optk <- t(sapply(IC5.100,function(l)apply(l[,-1],2,which.min)))-1
 sn5ub.100 <- fit.lambda.midas_sim_list(sim5.100,that~theta.us214(index,lambda,beta),k=optk[,3],start=list(lambda=c(-0.01,-0.001),beta=0.5),trace=TRUE)
 
 sn5rgb.100 <- fit.lambda.midas_sim_list(sim5.100,that~theta.rg214(index,lambda0,lambda1,beta),k=optk[,3],start=list(lambda0=-1,lambda1=-10,beta=-0.8),trace=TRUE)
+
+#######################################################
+##Alternative function
+#######################################################
+
+sim6 <-  sim.Y.finite(500,4,3000,tfun=theta.uab214,xfun=sim.X,lambda=c(-1,-1),alpha=-1,beta=2)
+
+IC6 <- gen.IC(sim6,kmax=70)
+
+sn6u <- fit.lambda(sim6,that~theta.uab214(index,lambda,alpha,beta),k=39,start=list(lambda=c(-1,-1),alpha=-1,beta=2),trace=TRUE)
+
+
+sn6rg <- fit.lambda(sim6,that~theta.rg214(index,lambda0,lambda1,beta),k=39,start=list(lambda0=-1,lambda1=-0.1*100,beta=20),trace=TRUE)
+
+sn6rc <- fit.lambda(sim6,that~theta.rc214(index,lambda,alpha,beta),k=39,start=list(lambda=c(-1,-10),alpha=0,beta=-20),trace=TRUE)
+
+sim6.100 <- sim.Y.finite.list(500,4,3000,100,tfun=theta.uab214,xfun=sim.X,lambda=c(-1,-1),alpha=-1,beta=2)
+
+sim6u.100 <- fit.lambda(sim6.100,that~theta.uab214(index,lambda,alpha,beta),k=39,start=list(lambda=c(-1,-1),alpha=-1,beta=2),trace=TRUE)
+
+sn6rc.100 <- fit.lambda(sim6.100,that~theta.rc214(index,lambda,alpha,beta),k=39,start=list(lambda=c(-1,-10),alpha=0,beta=-20),trace=TRUE)

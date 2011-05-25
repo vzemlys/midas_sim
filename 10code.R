@@ -39,11 +39,25 @@ reflow.midas_sim <- function(object,k) {
     data.frame(Y,X)
 }
 
+getX <- function(object,...) UseMethod("getX")
+
+getX.midas_sim <- function(object,k) {
+    m <- length(object$X)%/%length(object$Y)
+    n <- length(object$Y)
+    rcppreflow(object$X,c(n,m,k))
+}
 
 theta.r214 <- function(index,lambda,beta,...) {
     pol <- poly((index+1),2,raw=TRUE) %*%lambda
     epol <- exp(pol)
     beta*epol/sum(epol)
+}
+
+theta.rc214 <- function(index,lambda,alpha,beta,...) {
+    i <- (index+1)/100
+    pol <- poly(i,2,raw=TRUE) %*%lambda
+    epol <- exp(pol)
+    alpha+beta*epol/sum(epol)
 }
 
 theta.rg214 <- function(index,lambda0,lambda1,beta,...) {
@@ -78,6 +92,7 @@ theta.uab214 <- function(index,lambda,alpha,beta) {
     pol <- poly(i,2,raw=TRUE) %*%lambda
     (alpha+beta*i)*exp(pol)
 }
+
 theta.rs214 <- function(index,lambda,beta,...) {
     pol <- poly((index+1),2,raw=TRUE) %*%lambda
     epol <- exp(pol)*((-1)^index)
@@ -135,6 +150,20 @@ fit.lambda.midas_sim_list <- function(object,formula,k,...) {
     if(length(k)==1) res <- lapply(object,fit.lambda,formula=formula,k=k,...)
     else res <- foreach(l=object,ki=k,.combine=c) %do% list(fit.lambda(l,formula,ki,...))
     res
+}
+
+testnull <- function(ms,fl=NULL,...) {
+    if(is.null(fl)) fl <- fit.lambda(ms,...)
+    res <- fl$m$resid()
+    attr(res,"gradient") <- NULL
+    m <- length(ms$X)%/%length(ms$Y)
+    K <- length(res)%/%m-1
+    
+    X <- getX(ms,k=K)
+    N <- nrow(X)
+  
+    XX <- crossprod(X)/N
+    sum(res*solve(XX,res))/N
 }
 
 compare.lambda <- function(x,y) {
