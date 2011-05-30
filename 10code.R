@@ -153,17 +153,34 @@ fit.lambda.midas_sim_list <- function(object,formula,k,...) {
 }
 
 testnull <- function(ms,fl=NULL,...) {
+    require(MASS)
     if(is.null(fl)) fl <- fit.lambda(ms,...)
     res <- fl$m$resid()
+    gr <- attr(res,"gradient")
     attr(res,"gradient") <- NULL
-    m <- length(ms$X)%/%length(ms$Y)
-    K <- length(res)%/%m-1
+    m <- ms$m
+    n <- ms$n
+    mk <- length(res)
     
-    X <- getX(ms,k=K)
-    N <- nrow(X)
-  
-    XX <- crossprod(X)/N
-    sum(res*solve(XX,res))/N
+    k <- mk%/%m-1
+    
+    X <- getX(ms,k=k)
+   
+    u <- ms$Y[(k+1):n]-X%*%fl$m$lhs()
+    varu <- sum(u^2)/(ms$n-mk)
+
+    #browser() 
+    H <- crossprod(gr)
+    h <- gr%*%solve(H,t(gr))
+    ih <- diag(mk)-h
+    
+    XX <- crossprod(X)/varu
+
+    vartg <- ih%*%solve(XX,ih)
+
+   # browser()
+    sum(res*(ginv(vartg)%*%res))
+
 }
 
 compare.lambda <- function(x,y) {
