@@ -11,7 +11,12 @@ info.type <- 3 # AIC - 1, BIC - 2, HQ - 3, KZIC - 4
 laipsn <- 0 ## 0 - kmax= Scwert12, kitaip kmax=n^laipsn
 k0 <- 4 ## 0 - L=all pagal IC, >0 - nurodytas, tik perstumtas per viena, t.y. k0=L-1
 
-no.of.coef <- m*(k0+1)
+if(k0==0) {
+    no.of.coef <- 0
+}
+else {
+    no.of.coef <- m*(k0+1)
+}
 
 n.xout <- 0 # min tarp n.xout ir kmax
 
@@ -21,10 +26,10 @@ b.0<-10
 sd.x <- 1
 sd.y <- 1
 
-dal.interv <- 6
+dal.interv <- 6 ## for grid search not used at the moment (optim is da best)
 
 init.0 <- c(alpha=a.0,beta=b.0,lambda.1=l.0[1],lambda.2=l.0[2])
-init<- expand.grid(alpha=seq(-1, 1, len = dal.interv),beta=seq(-20, 30, len = dal.interv), lambda.1=seq(-30, 20, len = dal.interv),lambda.2=seq(-30, 20, len = dal.interv))
+init<- expand.grid(alpha=seq(-1, 1, len = dal.interv),beta=seq(-20, 30, len = dal.interv), lambda.1=seq(-30, 20, len = dal.interv),lambda.2=seq(-30, 20, len = dal.interv)) ##for grid search, not used at the moment
 
 min.iter.sk <- 1 # daugiau kokio min realizaciju skaiciaus skaiciuojama galia ir reiksmingumas (galima paskui suskaiciuoti rez.1-ame, kai rez.0 jau yra)
 
@@ -32,15 +37,16 @@ ptm <- proc.time()
 ###############
 ###############
 ###############
-library("nls2",lib="/home/scratch/R/site-library")
-library("multicore",lib="/home/scratch/R/site-library")
-library("iterators",lib="/home/scratch/R/site-library")
-library("foreach",lib="/home/scratch/R/site-library")
-library("doMC",lib="/home/scratch/R/site-library")
-#library("stats",lib="/home/scratch/R/site-library")
-#library("Rcpp",lib="/home/scratch/lib64/R/library")
-#library("inline",lib="/home/scratch/lib64/R/library")
-library("MASS",lib="/home/scratch/lib64/R/library")
+libname1 <- "/home/scratch/R/site-library"
+
+library("nls2",lib=libname1)
+library("multicore",lib=libname1)
+library("iterators",lib=libname1)
+library("foreach",lib=libname1)
+library("doMC",lib=libname1)
+
+libname2 <- "/home/scratch/lib64/R/library"
+library("MASS",lib=libname2)
 
 registerDoMC(16)
 #set.seed(1234)
@@ -58,6 +64,8 @@ theta.h1 <- function(index,alpha,beta,lambda.1,lambda.2) {
     epol <- exp(pol)
     alpha+beta*epol/sum(epol)
 }
+
+##TASK 1: Here be gradients, check them!
 make.g.h0<-function(object,...){
     alpha<-coefficients(object)[1]
     beta<-coefficients(object)[2]
@@ -68,6 +76,7 @@ make.g.h0<-function(object,...){
     a<-(alpha+beta*i)*exp(pol)
     cbind(a,a*i,a*i*(alpha+beta*i),a*i^2*(alpha+beta*i))
 }
+
 make.g.h1<-function(object,...){
     alpha<-coefficients(object)[1]
     beta<-coefficients(object)[2]
@@ -81,12 +90,17 @@ make.g.h1<-function(object,...){
     b2 <- sum(epol*i^2)/sum(epol)
     cbind(index/index,b0,beta*b0*(i-b1),beta*b0*(i^2-b2))
 }
+
+###TASK 2. Check whether generated process (AR) is really AR(1).
+###On the other hand check both.
 dgp.x <- function(n.x,rho,sd,burn.in=300,...) {
     e <- rnorm(n.x+burn.in,sd=sd.x)
 	if(type=="ar"){res <- filter(e,filter=rho,method="recursive",sides=1)}
 	if(type=="ma"){res<-c(0,e[2:length(e)]+rho*e[1:(length(e)-1)])}
     res[-burn.in:-1]
 }
+
+##TASK 3. Check whether optimisation is needed. Lm is usualy slow.
 gen.IC <- function(yx,kmax,theta,n){
     res <- foreach(k=0:(kmax-1),.combine=rbind) %do% {
         c.1 <- k+1
@@ -97,11 +111,15 @@ gen.IC <- function(yx,kmax,theta,n){
     colnames(res) <- c("Lag","AIC","BIC","HQ","KZIC")
     res
 }
+
+
 IC <- function(object,k,n) {
     xx <- 1/min(eigen(t(object$model[,-1])%*%object$model[,-1],symmetric=TRUE)$values)
     sigma2 <- sum(object$residuals^2)/(length(resid(object))-length(coef(object)))
     log(n-k)+log(xx)+log(sigma2)
 }
+
+##TASK 4. Is this really MIDAS?
 dgp <- function(n,n.x,km,theta){
                 theta.d <- cbind(theta,1:n.x)[order(-(1:n.x)),1]
                 x <- dgp.x(n.x,rho.v,sd.x)
@@ -115,16 +133,25 @@ dgp <- function(n,n.x,km,theta){
                        }+rnorm(n,sd=sd.y)
                 yx <- cbind(y,X)
             }
+
+
 powerf<-function(obj,krit,reiksm) {
     c((sum(obj[,2]>krit,na.rm=T)+sum(is.na(obj[,2])))/length(obj[,2]),(sum(obj[,2]>qchisq(1-reiksm,df=obj[,10]),na.rm=T)+sum(is.na(obj[,2])))/length(cbind(obj[,2],obj[,10])[,1]))
 }
+
+
 powerf.NA<-function(obj,krit,reiksm) {
     c(sum(obj[,2]>krit,na.rm=T)/length(na.omit(cbind(obj[,2],krit))[,1]),sum(obj[,2]>qchisq(1-reiksm,df=obj[,10]),na.rm=T)/length(cbind(obj[,2],obj[,10])[,1]))
 }
+
+###TASK 5. Set.seed in parallel environments, I think I read something somewhere about it. Search R-bloggers.
 set.seed(1)
 #################
 #################
 #################
+
+####How exactly %:% works?
+
 rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
           foreach(i=1:iter,.combine='rbind') %dopar% {
                 n <- steb[n.s]
@@ -138,11 +165,15 @@ rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
                 c.1 <- k.x+1
                 mod <- lm(yx[k.x:n,1]~yx[k.x:n,2:(c.1*m+1)]-1)
 
+                ###Assign correct L value
                 n.o <- length(coef(mod))
                 if(no.of.coef>0){
                     n.o <- no.of.coef # ???!!! #
 #                    c.1 <- k0+1
                 }
+
+                ##If L is larger than k,
+                ##reestimate model to accomodate for that.
                 if(n.o>length(coef(mod))){
                     c.1 <- n.o/m
                     mod <- lm(yx[k.x:n,1]~yx[k.x:n,2:(n.o+1)]-1)
@@ -169,8 +200,12 @@ rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
                     fn0 <- function(lamb) {t(g(lamb))%*%t(W)%*%W%*%g(lamb)}
                     e0 <- optim(lamb,fn0)[[1]]
 ###
+                    ####Task 6. Fix the error with theta.h0, it should be out, not in.
+                    ###Task 7. At the current moment all history (which is unavailable for real applications) is used. Explore the possibility to resample true process to estimate $\tilde X\tilde\theta\thilde\theta'X'. Move then X.in to Ch.
+                    
                     big <- t(X.in)%*%X.out%*%theta.h0(1:length(X.out[1,]),alpha=e0[1],beta=e0[2],lambda.1=e0[3],lambda.2=e0[4])%*%t(theta.h0(1:length(X.out[1,]),alpha=e0[1],beta=e0[2],lambda.1=e0[3],lambda.2=e0[4]))%*%t(X.out)%*%X.in
 #                    Ch <- chol(sd(resid(mod))^2*Axtx+Axtx%*%big[1:n.o,1:n.o]%*%Axtx)
+                    ##Task 8. Now true sd.y is used, change it to the estimate. Include X.in from task 7.
                     Ch <- chol(sd.y*Axtx+Axtx%*%big[1:n.o,1:n.o]%*%Axtx)
                     W <- ginv(t(Ch))
                     fn0 <- function(lamb) {t(g(lamb))%*%t(W)%*%W%*%g(lamb)}
@@ -178,6 +213,7 @@ rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
 ###
                     eq.u <- list(nobs=length(dat[,1]),residuals=(dat[,1]-theta.h0(dat[,2],alpha=e0[1],beta=e0[2],lambda.1=e0[3],lambda.2=e0[4])),coefficients=e0)
                     gr.h0<-make.g.h0(eq.u)
+                    ###Task 9. Check whether the formula is correct. 
                    h0 <- t(W%*%resid(eq.u))%*%ginv(sd(resid(mod))^2*(diag(length(resid(eq.u)))-W%*%gr.h0%*%ginv(t(W%*%gr.h0)%*%W%*%gr.h0)%*%t(W%*%gr.h0))%*%t(diag(length(resid(eq.u)))-W%*%gr.h0%*%ginv(t(W%*%gr.h0)%*%W%*%gr.h0)%*%t(W%*%gr.h0)))%*%W%*%resid(eq.u)
                 })
                 if(class(h0.try)=="try-error") h0 <- NA
@@ -225,6 +261,7 @@ dfmm <- foreach(n.s=1:length(steb),.combine='rbind')%do%{
    if(no.of.coef==0){a <- c(steb[n.s],min(rez.0[rez.0[,14]==steb[n.s],3]),max(rez.0[rez.0[,14]==steb[n.s],3]))}
    a
 }
+
 rez.1 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
           foreach(z.s=(m*c(dfmm[dfmm[,1]==steb[n.s],2]:dfmm[dfmm[,1]==steb[n.s],3])),.combine='rbind')%dopar%{
               n <- steb[n.s]
