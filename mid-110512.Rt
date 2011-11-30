@@ -24316,4 +24316,14 @@ Browse[1]> c
 [1] 190.5165
 > testnull(sim6,sn6rg)
 [1] 2027.925
-> 
+> testnull(sim6,sn6rc)
+[1] 460.9241
+> testnull(sim6,sn6u)
+[1] 149.6761
+> Thu Jun  9 10:55:34 ivrin.local R[2553] <Error>: kCGErrorIllegalArgument: CGSShapeWindow
+Thu Jun  9 10:55:35 ivrin.local R[2553] <Error>: kCGErrorFailure: Set a breakpoint @ CGErrorBreakpoint() to catch errors as they are logged.
+testnull(sim6,sn6rg)
+[1] 2027.925
+> Save workspace image? [y/n/c]: y
+
+Process R:2 finished at Thu Jun  9 11:55:04 2011
