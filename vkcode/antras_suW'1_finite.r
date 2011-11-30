@@ -1,6 +1,7 @@
 ##############
 ### ANTRAS ### - sd.y dabar duotas, o reikia jo ivercio.
 ##############
+
 rm(list=ls())
 iter<-200
 steb<-c(250,500,1000,2000)#c(250,500,1000,2000)
@@ -13,8 +14,7 @@ k0 <- 4 ## 0 - L=all pagal IC, >0 - nurodytas, tik perstumtas per viena, t.y. k0
 
 if(k0==0) {
     no.of.coef <- 0
-}
-else {
+}else {
     no.of.coef <- m*(k0+1)
 }
 
@@ -46,7 +46,9 @@ library("foreach",lib=libname1)
 library("doMC",lib=libname1)
 
 libname2 <- "/home/scratch/lib64/R/library"
-library("MASS",lib=libname2)
+library("MASS",lib=libname1)
+
+library(MASS)
 
 registerDoMC(16)
 #set.seed(1234)
@@ -203,7 +205,7 @@ rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
                     ####Task 6. Fix the error with theta.h0, it should be out, not in.
                     ###Task 7. At the current moment all history (which is unavailable for real applications) is used. Explore the possibility to resample true process to estimate $\tilde X\tilde\theta\thilde\theta'X'. Move then X.in to Ch.
                     
-                    big <- t(X.in)%*%X.out%*%theta.h0(1:length(X.out[1,]),alpha=e0[1],beta=e0[2],lambda.1=e0[3],lambda.2=e0[4])%*%t(theta.h0(1:length(X.out[1,]),alpha=e0[1],beta=e0[2],lambda.1=e0[3],lambda.2=e0[4]))%*%t(X.out)%*%X.in
+                    big <- t(X.in)%*%X.out%*%theta.h0(ncol(X.in)+1:ncol(X.out),alpha=e0[1],beta=e0[2],lambda.1=e0[3],lambda.2=e0[4])%*%t(theta.h0(ncol(X.in)+1:length(X.out[1,]),alpha=e0[1],beta=e0[2],lambda.1=e0[3],lambda.2=e0[4]))%*%t(X.out)%*%X.in
 #                    Ch <- chol(sd(resid(mod))^2*Axtx+Axtx%*%big[1:n.o,1:n.o]%*%Axtx)
                     ##Task 8. Now true sd.y is used, change it to the estimate. Include X.in from task 7.
                     Ch <- chol(sd.y*Axtx+Axtx%*%big[1:n.o,1:n.o]%*%Axtx)
@@ -217,7 +219,6 @@ rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
                    h0 <- t(W%*%resid(eq.u))%*%ginv(sd(resid(mod))^2*(diag(length(resid(eq.u)))-W%*%gr.h0%*%ginv(t(W%*%gr.h0)%*%W%*%gr.h0)%*%t(W%*%gr.h0))%*%t(diag(length(resid(eq.u)))-W%*%gr.h0%*%ginv(t(W%*%gr.h0)%*%W%*%gr.h0)%*%t(W%*%gr.h0)))%*%W%*%resid(eq.u)
                 })
                 if(class(h0.try)=="try-error") h0 <- NA
-
                 sol.meth.h1 <- 0
                 h1.try <- try({
                     sol.meth.h1 <- 1
@@ -226,7 +227,7 @@ rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
                     fn1 <- function(lamb) {t(g(lamb))%*%t(W)%*%W%*%g(lamb)}
                     e1 <- optim(lamb,fn1)[[1]]
 ###
-                    big <- t(X.in)%*%X.out%*%theta.h1(1:length(X.out[1,]),alpha=e1[1],beta=e1[2],lambda.1=e1[3],lambda.2=e1[4])%*%t(theta.h1(1:length(X.out[1,]),alpha=e1[1],beta=e1[2],lambda.1=e1[3],lambda.2=e1[4]))%*%t(X.out)%*%X.in
+                    big <- t(X.in)%*%X.out%*%theta.h1(ncol(X.in)+1:length(X.out[1,]),alpha=e1[1],beta=e1[2],lambda.1=e1[3],lambda.2=e1[4])%*%t(theta.h1(ncol(X.in)+1:length(X.out[1,]),alpha=e1[1],beta=e1[2],lambda.1=e1[3],lambda.2=e1[4]))%*%t(X.out)%*%X.in
 #                    Ch <- chol(sd(resid(mod))^2*Axtx+Axtx%*%big[1:n.o,1:n.o]%*%Axtx)
                     Ch <- chol(sd.y*Axtx+Axtx%*%big[1:n.o,1:n.o]%*%Axtx)
                     W <- ginv(t(Ch))
@@ -249,10 +250,14 @@ rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
                     names(vec) <- c("H0","H1","IC","kmax","lambda.1","lambda.2","alpha","beta","nobs_eq.u","df_eq.u","omit.last","sol.meth.H0","sol.meth.H1","n","1e+10")
                     vec
        }
+
+
+
 apply(rez.0,2,mean)
 summary(rez.0[,1])
 summary(rez.0[,2])
-#rez.0
+
+                                        #rez.0
 #################
 #################
 #################
@@ -297,6 +302,7 @@ rez.1 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
               names(vect) <- c("n","df","no of df cases","size_1","size_5","size_10","size.beNA_1","size.beNA_5","size.beNA_10","power.adj_1","power.nom_1","power.adj_5","power.nom_5","power.adj_10","power.nom_10","power.beNA.adj_1","power.beNA.nom_1","power.beNA.adj_5","power.beNA.nom_5","power.beNA.adj_10","power.beNA.nom_10","nas.H0","nas.H1","sol.meth.H0=0","sol.meth.H0=1","sol.meth.H0=2","sol.meth.H0=3","sol.meth.H1=0","sol.meth.H1=1","sol.meth.H1=2","sol.meth.H1=3")
               vect
 }
+
 rez.1
 rez.2 <- foreach(n.s=1:length(steb),.combine='rbind')%dopar%{
          n <- steb[n.s]
@@ -311,6 +317,6 @@ trukme
 #####################
 #####################
 #####################
-s.file<-sprintf("/home/scratch/Virmantas/dat_midas/_II_k0%1.f_beW/H0_iter.%1.f_steb.%1.f_type.%s.%.2f_m.%1.f_ic.%1.f_omit.%1.f_power.%.2f_dal.interv.%1.f.Rdata",k0,iter,steb,type,rho.v,m,info.type,0,laipsn,dal.interv)[1]
+s.file<-sprintf("rez_II_k0%1.f_beW/H0_iter.%1.f_steb.%1.f_type.%s.%.2f_m.%1.f_ic.%1.f_omit.%1.f_power.%.2f_dal.interv.%1.f.Rdata",k0,iter,steb,type,rho.v,m,info.type,0,laipsn,dal.interv)[1]
 
 #save(iter,steb,type,rho.v,m,l.0,a.0,b.0,info.type,0,sd.x,sd.y,rez.0,rez.1,rez.2,file=s.file)
