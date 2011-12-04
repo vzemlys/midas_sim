@@ -37,20 +37,20 @@ ptm <- proc.time()
 ###############
 ###############
 ###############
+
 libname1 <- "/home/scratch/R/site-library"
+libname1 <- NULL
 
-library("nls2",lib=libname1)
-library("multicore",lib=libname1)
-library("iterators",lib=libname1)
-library("foreach",lib=libname1)
-library("doMC",lib=libname1)
-
-libname2 <- "/home/scratch/lib64/R/library"
-library("MASS",lib=libname1)
+#library("nls2",lib=libname1)
+library("multicore")
+library("iterators")
+library("foreach")
+library("doMC")
 
 library(MASS)
 
 registerDoMC(16)
+
 #set.seed(1234)
 #################
 ### Funkcijos ###
@@ -147,15 +147,23 @@ powerf.NA<-function(obj,krit,reiksm) {
 }
 
 ###TASK 5. Set.seed in parallel environments, I think I read something somewhere about it. Search R-bloggers.
-set.seed(1)
+library(doRNG)
+seed <- doRNGseed()
+doRNGseed(seed)
+
 #################
 #################
 #################
 
 ####How exactly %:% works?
 
-rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
-          foreach(i=1:iter,.combine='rbind') %dopar% {
+rez.00 <- foreach(n.s=1:4,.combine='rbind')%dorng% {
+          foreach(i=1:2,.combine='rbind') %dorng% {
+              rnorm(1)
+          }}
+
+rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%dorng% {
+          foreach(i=1:iter,.combine='rbind') %dorng% {
                 n <- steb[n.s]
                 kmax <- trunc(n^laipsn)
                 if(laipsn==0){kmax <- trunc(12*(n/100)^0.25)}
@@ -249,7 +257,7 @@ rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
                     })
                     names(vec) <- c("H0","H1","IC","kmax","lambda.1","lambda.2","alpha","beta","nobs_eq.u","df_eq.u","omit.last","sol.meth.H0","sol.meth.H1","n","1e+10")
                     vec
-       }
+       }}
 
 
 
@@ -268,7 +276,7 @@ dfmm <- foreach(n.s=1:length(steb),.combine='rbind')%do%{
 }
 
 rez.1 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
-          foreach(z.s=(m*c(dfmm[dfmm[,1]==steb[n.s],2]:dfmm[dfmm[,1]==steb[n.s],3])),.combine='rbind')%dopar%{
+          foreach(z.s=(m*c(dfmm[dfmm[,1]==steb[n.s],2]:dfmm[dfmm[,1]==steb[n.s],3])),.combine='rbind')%dorng%{
               n <- steb[n.s]
               rez <- rez.0[rez.0[,14]==n&rez.0[,10]==z.s,]
               ifelse(length(rez)>15*min.iter.sk,{
@@ -304,7 +312,7 @@ rez.1 <- foreach(n.s=1:length(steb),.combine='rbind')%:%
 }
 
 rez.1
-rez.2 <- foreach(n.s=1:length(steb),.combine='rbind')%dopar%{
+rez.2 <- foreach(n.s=1:length(steb),.combine='rbind')%dorng%{
          n <- steb[n.s]
          a <- t(rez.1[rez.1[,1]==n,])
          if(length(rez.1[rez.1[,1]==n,1])>1){a <- apply(rez.1[rez.1[,1]==n,],2,mean,na.rm=T)}
@@ -320,3 +328,7 @@ trukme
 s.file<-sprintf("rez_II_k0%1.f_beW/H0_iter.%1.f_steb.%1.f_type.%s.%.2f_m.%1.f_ic.%1.f_omit.%1.f_power.%.2f_dal.interv.%1.f.Rdata",k0,iter,steb,type,rho.v,m,info.type,0,laipsn,dal.interv)[1]
 
 #save(iter,steb,type,rho.v,m,l.0,a.0,b.0,info.type,0,sd.x,sd.y,rez.0,rez.1,rez.2,file=s.file)
+
+\
+
+
