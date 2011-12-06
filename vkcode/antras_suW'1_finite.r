@@ -155,12 +155,6 @@ doRNGseed(seed)
 #################
 #################
 
-####How exactly %:% works?
-
-rez.00 <- foreach(n.s=1:4,.combine='rbind')%dorng% {
-          foreach(i=1:2,.combine='rbind') %dorng% {
-              rnorm(1)
-          }}
 
 rez.0 <- foreach(n.s=1:length(steb),.combine='rbind')%dorng% {
           foreach(i=1:iter,.combine='rbind') %dorng% {
@@ -329,6 +323,6 @@ s.file<-sprintf("rez_II_k0%1.f_beW/H0_iter.%1.f_steb.%1.f_type.%s.%.2f_m.%1.f_ic
 
 #save(iter,steb,type,rho.v,m,l.0,a.0,b.0,info.type,0,sd.x,sd.y,rez.0,rez.1,rez.2,file=s.file)
 
-\
+
 
 
